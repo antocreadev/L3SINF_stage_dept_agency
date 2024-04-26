@@ -1,26 +1,22 @@
-name: publish
+name: Publish Docker image to GitHub Packages
+
 on:
   push:
-    tags:
-      - 'v*'
-      
+    branches:
+      - main
+
 jobs:
-  publish-docker-image:
-    runs-on: ubuntu-22.04
-    timeout-minutes: 10
+  publish:
+    name: Publish Docker image
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build the Docker image
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+      
+      - name: Build and push Docker image
         run: |
-          tag=${GITHUB_REF#refs/tags/}
-          tag=${tag:1}
-          image=ghcr.io/${GITHUB_REPOSITORY}
-          docker build . -t ${image}:${tag} -t ${image}:latest
-          docker push ${image} --all-tags
-          
+          docker build -t docker.pkg.github.com/${{ github.repository }}/webflow_next:latest .
+          docker push docker.pkg.github.com/${{ github.repository }}/webflow_next:latest
