@@ -12,10 +12,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      
+
       - name: Login to GitHub Packages
-        run: echo "${{ secrets.test-webflow-next}}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-      
+        run: docker login docker.pkg.github.com -u ${{ github.actor }} -p ${{ secrets.test-webflow-next }}
+
       - name: Build and push Docker image
         run: |
           docker build -t docker.pkg.github.com/${{ github.repository }}/webflow_next:latest .
