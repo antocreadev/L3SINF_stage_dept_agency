@@ -18,4 +18,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_REGISTRY }}/my-image:latest
+          tags: docker.pkg.github.com/${{ github.repository }}/webflow_next:latest
