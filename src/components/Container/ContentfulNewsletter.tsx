@@ -1,6 +1,6 @@
 // this is server component
 import { Newsletter } from "../devlink";
-import { Entry } from "@/types/contentfulEntry";
+import { Entry } from "contentful";
 // import { Entry } from "contentful";
 
 export default function ContentfulNewsletter({ data }: { data: Entry }) {
