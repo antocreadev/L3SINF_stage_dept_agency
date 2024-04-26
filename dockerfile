@@ -14,7 +14,11 @@ RUN npm install --production
 # Copiez le reste des fichiers du projet dans l'image
 COPY . .
 
+# Affichez le contenu du répertoire pour le débogage
+RUN ls -al
+
 # Exécutez la construction de votre application Next.js
+RUN echo "Building Next.js application..."
 RUN npm run build
 
 # Exposez le port sur lequel votre application Next.js s'exécute (par défaut : 3000)
