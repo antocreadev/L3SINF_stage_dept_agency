@@ -12,5 +12,5 @@ export const fetchData = async (id : string) => {
 
   const response = await client.getEntry(id); // getEntry for specific page
 
-  return response as unknown as Array<Entry>;
+  return response;
 };
